@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://djf78mvp1a7yg"]
+
+[ext_resource type="PackedScene" uid="uid://beqpkho17uimb" path="res://escenas/player/player.tscn" id="1_7kypr"]
+[ext_resource type="Script" path="res://escenas/field.gd" id="1_s74y0"]
+[ext_resource type="PackedScene" uid="uid://dvn6hh8dtxg5k" path="res://escenas/ball/ball.tscn" id="2_vfrxf"]
+[ext_resource type="Texture2D" uid="uid://b2h84jab3bxee" path="res://icon.svg" id="3_ixthw"]
+[ext_resource type="PackedScene" uid="uid://hm1dkyv8vdbv" path="res://escenas/block/block.tscn" id="4_oxhgj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcgy7"]
+
+[node name="Field" type="Node2D"]
+script = ExtResource("1_s74y0")
+
+[node name="Player" parent="." instance=ExtResource("1_7kypr")]
+
+[node name="ball" parent="." instance=ExtResource("2_vfrxf")]
+position = Vector2(640, 640)
+
+[node name="topWall" type="StaticBody2D" parent="."]
+position = Vector2(640, 0)
+scale = Vector2(64, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="topWall"]
+visible = false
+texture = ExtResource("3_ixthw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="topWall"]
+shape = SubResource("RectangleShape2D_pcgy7")
+
+[node name="botWall" type="Area2D" parent="."]
+position = Vector2(640, 720)
+scale = Vector2(64, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="botWall"]
+visible = false
+texture = ExtResource("3_ixthw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="botWall"]
+shape = SubResource("RectangleShape2D_pcgy7")
+
+[node name="leftWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 360)
+scale = Vector2(0.5, 36)
+
+[node name="Sprite2D" type="Sprite2D" parent="leftWall"]
+visible = false
+texture = ExtResource("3_ixthw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftWall"]
+shape = SubResource("RectangleShape2D_pcgy7")
+
+[node name="rigthWall" type="StaticBody2D" parent="."]
+position = Vector2(1280, 360)
+scale = Vector2(0.5, 36)
+
+[node name="Sprite2D" type="Sprite2D" parent="rigthWall"]
+visible = false
+texture = ExtResource("3_ixthw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rigthWall"]
+shape = SubResource("RectangleShape2D_pcgy7")
+
+[node name="block" parent="." instance=ExtResource("4_oxhgj")]
+position = Vector2(64, 33)
+
+[connection signal="body_entered" from="botWall" to="." method="_on_bot_wall_body_entered"]
